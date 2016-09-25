@@ -18,10 +18,12 @@ class Sim{
 	var sexoDePreferencia
 	var estaEnPareja = false
 	var suPareja
-	var amigosAntesDeTenerPareja = []
+	// amigosAntesDeTenerPareja pasa a ser amigosDeSiempre
+	var amigosDeSiempre = []
 	var trabajo
 	var estadoDeAnimo = normal
 	var conocimiento = []
+	
 	
 	constructor(unSexo, unaEdad, unNivelDeFelicidad, amigosDelSim, unaPersonalidad, cantDinero, unSexoDePreferencia, unTrabajo){
 		sexo = unSexo
@@ -121,8 +123,16 @@ class Sim{
 	
 	
 	method agregarAmigo(unAmigo){
-		amigos.add(unAmigo)
-		nivelDeFelicidad += personalidad.obtenerValoracionDeAlguien(unAmigo)
+		// se puede poner nivel de felicidad fuera?
+		if (estaEnPareja = true){
+			amigosDeSiempre.add(unAmigo)
+			amigos.add(unAmigo)
+			nivelDeFelicidad += personalidad.obtenerValoracionDeAlguien(unAmigo)
+		}
+		else {
+			amigos.add(unAmigo)
+			nivelDeFelicidad += personalidad.obtenerValoracionDeAlguien(unAmigo)
+		}
 	}
 	
 	method amigoAQuienMasValora(){
@@ -130,7 +140,8 @@ class Sim{
 	}
 	
 	method eliminarAmigo(unAmigo){
-		amigos.remove(unAmigo)
+			amigos.remove(unAmigo)
+			amigosDeSiempre.remove(unAmigo)
 	}
 	
 	method esAmigoDe(unAmigo){
@@ -173,11 +184,11 @@ class Sim{
 	method darAbrazoProlongadoA(alguien){
 		if(alguien.leAtrae(self)){
 			alguien.setEstadoDeAnimo(soniador)
-			alguien.estadoDeAnimo().aplicarEstado(self)
+			alguien.estadoDeAnimo().aplicarEstado()
 		}
 		else{
 			alguien.setEstadoDeAnimo(incomodidad)
-			alguien.estadoDeAnimo().aplicarEstado(self)
+			alguien.estadoDeAnimo().aplicarEstado()
 		}
 	}
 	
@@ -193,25 +204,20 @@ class Sim{
 	method romperRelacion(){
 		estaEnPareja = false
 		suPareja = null
-		amigos = amigosAntesDeTenerPareja
+		amigos = amigosDeSiempre
 	}
 	
 	method unirAmigos(unSim){
-		amigosAntesDeTenerPareja = amigos
-		amigos = (amigos + unSim.amigosDelSim()).asSet().asList() 
+		amigosDeSiempre = amigos
+		amigos = (amigos + unSim.amigosDelSim()).asSet()
 	}
-	
-	method unirAmigosDePareja(unSim){
-		amigosAntesDeTenerPareja = amigos
-		amigos = unSim.amigosDelSim() 
-	}
-	
+
 	method iniciarRelacionCon(unSim){
 		if (self.leAtrae(unSim) && unSim.leAtrae(self)){
 			self.ponerEnPareja(unSim)
 			unSim.ponerEnPareja(self)
 			self.unirAmigos(unSim)
-			unSim.unirAmigosDePareja(self)
+			unSim.unirAmigos(self)
 		}	
 	}
 	
