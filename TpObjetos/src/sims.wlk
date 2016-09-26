@@ -239,7 +239,7 @@ class Sim{
 	method trabajaConTodosSusAmigos(){
 		return amigos.all({unAmigo => unAmigo.trabajo() == trabajo})
 	}
-	
+
 	method irATrabajar(){
 		trabajo.tipoDeTrabajo().trabajar(self)
 		personalidad.trabajar(self)
@@ -296,5 +296,39 @@ class Sim{
 	method ataqueDeCelosPorPareja(){
 		self.cambiarFelicidadEn(-10)
 		amigos = self.eliminarAmigosQueSonAmigosDeMiPareja()
+	}	
+}
+
+
+
+class Celos {
+     method disminuirFelicidad() {
+            return unSim.self.cambiarFelicidadEn(-10)}
+}
+
+
+// Dejaríamos el esMasPopular(),esMasRico() y esAmigoDeMiPareja() como método en class Sim
+
+
+class PorPlata inherits Celos {
+     method efectosDeCelos(){ 
+       return unSim.amigos = unSim.eliminarAmigosMasRicos()
+       }
+}
+
+
+
+class PorPopularidad inherits Celos {
+     method efectoDeCelos(){
+       return unSim.amigos = unSim.eliminarAmigosMasPopulares()
+	}
+}
+
+
+
+class PorAmigoDePareja inherits Celos {
+     method efectoDeCelos(){
+      unSim.amigos = unSim.eliminarAmigosQueSonAmigosDeMiPareja()
+      return un
 	}	
 }
