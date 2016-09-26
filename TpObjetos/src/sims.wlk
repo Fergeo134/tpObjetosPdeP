@@ -267,10 +267,10 @@ class Sim{
 		return amigos.filter({unAmigo => !(self.esMasRico(unAmigo))})
 	}
 	
-	method ataqueDeCelosPorPlata(){
-		self.cambiarFelicidadEn(-10)
-		amigos = self.eliminarAmigosMasRicos()
-	}
+//	method ataqueDeCelosPorPlata(){
+//		self.cambiarFelicidadEn(-10)
+//		amigos = self.eliminarAmigosMasRicos()
+//	}
 	
 	method esMasPopular(unAmigo){
 		return unAmigo.popularidad() > self.popularidad()
@@ -280,10 +280,10 @@ class Sim{
 		return amigos.filter({unAmigo => !(self.esMasPopular(unAmigo))})
 	}
 	
-	method ataqueDeCelosPorPopularidad(){
-		self.cambiarFelicidadEn(-10)
-		amigos = self.eliminarAmigosMasPopulares()
-	}
+//	method ataqueDeCelosPorPopularidad(){
+//		self.cambiarFelicidadEn(-10)
+//		amigos = self.eliminarAmigosMasPopulares()
+//	}
 	
 	method esAmigoDeMiPareja(unAmigo){
 		return suPareja.amigos().contains(unAmigo)
@@ -293,42 +293,37 @@ class Sim{
 		return amigos.filter({unAmigo => !(self.esAmigoDeMiPareja(unAmigo))})
 	}
 	
-	method ataqueDeCelosPorPareja(){
-		self.cambiarFelicidadEn(-10)
-		amigos = self.eliminarAmigosQueSonAmigosDeMiPareja()
-	}	
+//	method ataqueDeCelosPorPareja(){
+//		self.cambiarFelicidadEn(-10)
+//		amigos = self.eliminarAmigosQueSonAmigosDeMiPareja()
+//	}	
 }
 
 
 
 class Celos {
-     method disminuirFelicidad() {
-            return unSim.self.cambiarFelicidadEn(-10)}
+     method disminuirFelicidad(unSim){
+		return unSim.cambiarFelicidadEn(-10)
+		}
 }
-
 
 // Dejaríamos el esMasPopular(),esMasRico() y esAmigoDeMiPareja() como método en class Sim
 
 
 class PorPlata inherits Celos {
-     method efectosDeCelos(){ 
-       return unSim.amigos = unSim.eliminarAmigosMasRicos()
-       }
+    method efectosDeCelos(unSim){ 
+    	return unSim.eliminarAmigosMasRicos()
+     }
 }
 
-
-
-class PorPopularidad inherits Celos {
-     method efectoDeCelos(){
-       return unSim.amigos = unSim.eliminarAmigosMasPopulares()
+class PorPopularidad inherits Celos   {
+     method efectoDeCelos(unSim){
+     return unSim.eliminarAmigosMasPopulares()
 	}
 }
 
-
-
 class PorAmigoDePareja inherits Celos {
-     method efectoDeCelos(){
-      unSim.amigos = unSim.eliminarAmigosQueSonAmigosDeMiPareja()
-      return un
+     method efectoDeCelos(unSim){
+		return unSim.eliminarAmigosQueSonAmigosDeMiPareja()
 	}	
 }
